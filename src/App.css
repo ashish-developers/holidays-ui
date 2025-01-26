@@ -1,0 +1,130 @@
+.icon_c{
+    color: white !important;
+    margin-left: auto
+    
+} 
+.switch_com {
+    display: ruby !important;
+}
+.switch_btn{
+    margin-left: 100px !important;
+}
+.css-1j74uew-MuiPaper-root-MuiCard-root{
+    overflow: visible !important;
+}
+.date_select_sec{
+    font-size: 16px !important;
+}
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-6.css-1osj8n2-MuiGrid-root {
+    display: inline-flex !important;
+
+}
+.des_abt{
+    font-size: 8px !important;
+}
+.css-iarq6e {
+    background-color: #e0e0e0 !important;
+    padding: 16px;
+    height: auto !important;
+}
+.cruises_list{
+    padding-bottom: 40px !important;
+}
+.css-11lq3yg-MuiGrid-root{
+    justify-content: center !important;
+}
+.packge_button{
+    float: inline-end !important;
+}
+.MuiPaper-root {
+    overflow: visible !important;
+}
+
+.btn_bg{
+    background: #FFDD00 !important;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    width: 100%;
+} 
+.btn_new_bg{
+    width: 100%;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.form_tab{
+    margin-top: 10px !important;
+}
+.text_edit{
+    margin-top: 60px !important;
+}
+.category_field{
+    margin-top: 80px !important;
+}
+.close_btn{
+    float: inline-end !important;
+}
+.reset_btn{
+    background: #FFDD00 !important;
+    width: 200px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+.search_btn{
+    width: 200px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+.table_cruises{
+    margin-top: 50px !important;
+}
+.css-10d30g3-MuiPaper-root-MuiDialog-paper{
+max-width: 100% !important;
+}
+.css-16htz67-MuiPaper-root-MuiDialog-paper{
+    max-width: 100% !important;
+}
+.price_form{
+    margin-top: 30px !important;
+}
+.price_add_form{
+    margin-top: 20px !important;
+}
+.new_fare_set{
+    background: #FFDD00 !important;
+    float: inline-end !important;
+}
+.new_fare_y{
+    margin-top: 20px !important;
+}
+.warning_meg{
+    background: #5bc0de !important;
+    margin-top: 20px !important;
+    color: white !important;
+}
+.warning_text{
+    padding-bottom: 10px !important;
+}
+.add_btn_t{
+    margin-top: 20px !important;
+}
+.added_content{
+    margin-top: 10px !important;
+}
+.it_btn{
+    margin-top: 20px !important;
+}
+.btn_se{
+    
+    margin-top: 100px !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+
+}
+.table_container{
+    height: auto !important;
+}
+.MuiInputBase-root{
+    width: 580px !important;
+}
