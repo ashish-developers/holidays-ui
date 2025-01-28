@@ -152,91 +152,66 @@ const Pricing = () => {
         </Grid>
       </Grid>
 
-      <form>
+      
         <Grid container spacing={2} className='price_add_form'>
           <Grid item={6}>
             <Box sx={{ width: 580, maxWidth: '100%' }}>
-              <TextField fullWidth label="£" id="fullWidth1" />
+              <TextField fullWidth label="£" id="fullWidth1" name='price'/>
             </Box>
           </Grid>
           <Grid item={6}>
             <Box sx={{ width: 580, maxWidth: '100%' }}>
-              <TextField fullWidth label="£" id="fullWidth2" />
+              <TextField fullWidth label="£" id="fullWidth2" name='price2' />
             </Box>
           </Grid>
           <Grid item={6}>
             <Box sx={{ width: 580, maxWidth: '100%' }}>
-              <TextField fullWidth label="£" id="fullWidth3" />
+              <TextField fullWidth label="£" id="fullWidth3" name='price3' />
             </Box>
           </Grid>
           <Grid item={6}>
             <Box sx={{ width: 580, maxWidth: '100%' }}>
-              <TextField fullWidth label="£" id="fullWidth4" />
+              <TextField fullWidth label="£" id="fullWidth4" name='price4'/>
             </Box>
           </Grid>
           <Grid item={6}>
             <Box sx={{ width: 580, maxWidth: '100%' }}>
-              <TextField fullWidth label="£" id="fullWidth5" />
+              <TextField fullWidth label="£" id="fullWidth5" name='price5' />
             </Box>
           </Grid>
           <Grid item={6}>
             <Box sx={{ width: 580, maxWidth: '100%' }}>
-              <TextField fullWidth label="£" id="fullWidth6" />
+              <TextField fullWidth label="£" id="fullWidth6" name='price6' />
             </Box>
           </Grid>
           <Grid item={12} className='new_fare_btn'>
-            <Button
-              variant="contained"
-              size='large'
-              className='new_fare_set'
-              onClick={handleToggleFareSet}
-            >
+            <Button variant="contained" size='large' className='new_fare_set' onClick={handleToggleFareSet}>
               <AddIcon /> New Fare Set
             </Button>
           </Grid>
         </Grid>
-      </form>
 
-      <form>
         <Grid container spacing={2} className='new_fare_y'>
           {showFareSetContent && (
             <Grid item={12}>
-              {/* Header Row - Inputs for Fare Set Name, Airport Code, Deal Code */}
               <Grid container spacing={2}>
                 <Grid item={4}>
                   <Box sx={{ width: 350, maxWidth: '100%'  }}>
-                    <TextField
-                      label="Fare Set Name"
-                      fullWidth
-                      placeholder="Fare Set Name"
-                    />
+                    <TextField label="Fare Set Name"fullWidth placeholder="Fare Set Name" name='set_name'/>
                   </Box>
                 </Grid>
                 <Grid item={4}>
                   <Box sx={{ width: 350, maxWidth: '100%'  }}>
-                    <TextField
-                      label="Airport Code"
-                      fullWidth
-                      placeholder="Airport Code"
-                    />
+                    <TextField label="Airport Code" fullWidth placeholder="Airport Code" name='airport' />
                   </Box>
                 </Grid>
                 <Grid item={4}>
                   <Box sx={{ width: 350, maxWidth: '100%'  }}>
-                    <TextField
-                      label="Deal Code"
-                      fullWidth
-                      placeholder="Deal Code"
-                    />
+                    <TextField label="Deal Code" fullWidth placeholder="Deal Code" name='deal_code' />
                   </Box>
                 </Grid>
                 <Grid item={1}>
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    sx={{ marginTop: '16px' }}
-                    onClick={() => {}}
-                  >
+                  <Button variant="outlined" color="error" sx={{ marginTop: '16px' }} onClick={() => {}} >
                     <DeleteIcon />
                   </Button>
                 </Grid>
@@ -259,7 +234,7 @@ const Pricing = () => {
                   </Grid>
                   <Grid item={1}>
                   <Box sx={{ width: 200, maxWidth: '100%'  }}>
-                    <TextField name="price"value={row.price} onChange={(e) => handleChange(e, index)} label='£ price'/>
+                    <TextField name="price_grade"value={row.price} onChange={(e) => handleChange(e, index)} label='£ price'/>
                     </Box>
                   </Grid>
                   <Grid item={1}>
@@ -311,7 +286,7 @@ const Pricing = () => {
             </Grid>
           )}
         </Grid>
-      </form>
+      
     </>
   );
 };

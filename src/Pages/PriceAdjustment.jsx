@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
+import React, {  useState, useEffect, useRef } from 'react';
 import Select from 'react-select';
 import { Box, Grid, Typography, Checkbox, FormGroup, FormControlLabel, TextField } from '@mui/material';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-const PriceAdjustment = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [amount, setAmount] = useState('');
-
-  // Options for the Select dropdown
-  const selectOptions = [
-    { value: 'increase_percentage', label: 'Increase price by %' },
-    { value: 'decrease_percentage', label: 'Decrease price by %' },
-    { value: 'increase_amount', label: 'Increase price by amount' },
-    { value: 'decrease_amount', label: 'Decrease price by amount' },
-    { value: 'package_price', label: 'Package price' },
-  ];
+const PriceAdjustment = ({pricesAdjustment, value}) => {
+     //  FORM STATE 
+      const initialFormData = {
+        ad_name: "",
+        add_price: "",
+        add_date: "",
+        add_last_date: "",
+      }
+      const [formData, setFormData] = useState(initialFormData);
+      const [selectedOption, setSelectedOption] = useState(null);
+      const [amount, setAmount] = useState('');
 
   // Handle Select option change
   const handleSelectChange = (selected) => {
@@ -28,9 +27,12 @@ const PriceAdjustment = () => {
     setAmount(event.target.value);
   };
 
+  console.log('pricesAdjustment1', pricesAdjustment)
+
+
   return (
     <>
-    <form>
+
       <Grid container spacing={2}>
         {/* Select Dropdown */}
         <Grid item={4}>
@@ -38,17 +40,18 @@ const PriceAdjustment = () => {
           <Box sx={{ width: 380, maxWidth: '100%' }}>
             <Select
               className='select_option'
-              options={selectOptions}
+              options={pricesAdjustment}
               isMulti={false}
               onChange={handleSelectChange}
               placeholder="Select"
+              name='ad_name'
             />
           </Box>
         </Grid>
           <Grid item={4}>
           <Typography>Amount</Typography>
             <Box sx={{ width: 380, maxWidth: '100%' }}>
-            <TextField fullWidth label="Amaount" id="fullWidth" />
+            <TextField fullWidth label="Amaount" id="fullWidth" name='add_price'/>
             </Box>
           </Grid>
        
@@ -77,7 +80,7 @@ const PriceAdjustment = () => {
           <Box >
           <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={['DatePicker']}>
-        <DatePicker label="Start Date" fullWidth />
+        <DatePicker label="Start Date" fullWidth name='add_date'/>
       </DemoContainer>
     </LocalizationProvider>
           </Box>
@@ -86,13 +89,13 @@ const PriceAdjustment = () => {
           <Box >
           <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={['DatePicker']}>
-        <DatePicker label="Start Date" fullWidth />
+        <DatePicker label="Start Date" fullWidth name='add_last_date' />
       </DemoContainer>
     </LocalizationProvider>
           </Box>
         </Grid>
       </Grid>
-      </form>
+ 
     </>
   );
 };

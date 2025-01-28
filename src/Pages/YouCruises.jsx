@@ -40,7 +40,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
+
   '&:last-child td, &:last-child th': {
     border: 0,
   },
@@ -50,16 +50,15 @@ function valuetext(value) {
   }
 const YouCruises = ({ cruises, shipDetails,  onView }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [showModal, setShowModal] = useState(false); 
   const [modalData, setModalData] = useState(null);
 
   const handleOpenPackageModal = (item) => {
-    setModalData(item); // Pass the data to the modal
+    setModalData(item);
     setShowModal(true);
   };
   
- // console.log("test:",cruises);
-   {/*SELECT OPRATOR CODE Start Here*/}
+
    const [selectedCruiseLine, setSelectedCruiseLine] = useState(null);
    const cruiseLineOptions = cruises
      .map(cruise => cruise.operator_title) 
@@ -69,24 +68,21 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
    const handleCruiseLineChange = (selectedOption) => {
      setSelectedCruiseLine(selectedOption);
    };
-   {/*SELECT OPRATOR CODE END Here*/}
-   {/*SELECT SHIP CODE Start Here*/}
+
    const [selectedShip, setSelectedShip] = useState(null);
    const shipOptions = cruises.map(cruise => ({
      value: cruise.ship_title,  
      label: cruise.ship_title, 
    }));
  
-   // Handle changes for Ship selection
+ 
    const handleShipChange = (selectedOption) => {
      setSelectedShip(selectedOption);
    };
-   {/* SHIP SELECT CODE END Here*/}
-
-    {/* SELECT REGIONS CODE START HERE */}
+ 
    const [selectedRegions, setSelectedRegions] = useState([]);
 
-   // Extract unique regions across all cruises
+
    const regionOptions = cruises
      .flatMap(cruise => cruise.regions) 
      .filter((value, index, self) => self.indexOf(value) === index) 
@@ -99,8 +95,6 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
      setSelectedRegions(selectedOptions);
    };
 
-   {/* SELECT REGIONS CODE END HERE */}
-   {/* SELECT PORT CODE START HERE */}
    const [selectedDeparturePorts, setSelectedDeparturePorts] = useState([]);
 
    const departurePortOptions = cruises
@@ -114,28 +108,23 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
    const handleDeparturePortChange = (selectedOptions) => {
      setSelectedDeparturePorts(selectedOptions);
    };
-   {/* SELECT PORT CODE END HERE */}
 
-    {/* DATE PICKER CODE Start Here*/}
-    
     const [page, setPage] = useState(0); 
     const [rowsPerPage, setRowsPerPage] = useState(10); 
   
-    // Handle page change
     const handlePageChange = (event, newPage) => {
       setPage(newPage);
     };
-  
-    // Handle rows per page change
+
     const handleRowsPerPageChange = (event) => {
       setRowsPerPage(parseInt(event.target.value, 10));
-      setPage(0); // Reset to the first page
+      setPage(0); 
     };
   
     const handleToggleSwitch = (event, item) => {
       const newValue = event.target.checked;
       console.log(`Toggle status for ${item.name || item.title}: ${newValue}`);
-      // Add your logic to update the status
+
     };
   
     const paginatedCruises = cruises.slice(
@@ -158,22 +147,16 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
     setEndDate(date);
   };
  
-  {/* DATE PICKER CODE END HERE */}
-
-
-
- 
   const [loading, setLoading] = useState(false);
   
- {/* CHECKBOX CODE START HERE */}
+
  const [showCruiseEdit, setShowCruiseEdit] = useState(false);
 
- // Handle the checkbox change
  const handleCheckboxChange = (event) => {
-   setShowCruiseEdit(event.target.checked); // Set state based on checkbox value
+   setShowCruiseEdit(event.target.checked); 
  };
 
- // Handle clearing all
+
  const handleClearAll = () => {
    setShowCruiseEdit(false);
  };
@@ -184,9 +167,7 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
  const handleClearAllShow = () => {
     setShowCruisePackages(false); 
   };
- {/* CHECKBOX CODE END HERE */}
 
-  {/* PRICE SLIDER STSRT HERE */}
   const [value, setValue] = React.useState([20, 37]);
 
   const handleChange = (event, newValue) => {
@@ -201,17 +182,17 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
   const handlePrice =(event, newValue) =>{
     setPrice(newValue);
   }
-   {/* PRICE SLIDER END HERE */}
+   
    const [open, setOpen] = useState(false);
 
-  // Function to open the dialog
+  
   const handleClick = () => {
-    setOpen(true); // Open the dialog
+    setOpen(true); 
   };
 
-  // Function to close the dialog
+  
   const handleClose = () => {
-    setOpen(false); // Close the dialog
+    setOpen(false); 
   };
   return (
     <>
@@ -220,18 +201,17 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
    <Grid item xs={12} md={6}>
    <Typography variant='h4'>Your Cruise Filter</Typography>
    </Grid>
-   {/* PAKAGE PAGE CLICK BUTOON START HERE  */}
+ 
         <Grid item xs={12} md={6} className="packge_btn">
         <Packge open={open} handleClose={handleClose} />
          
         </Grid>
   
-        
-     {/* PAKAGE PAGE CLICK BUTOON END HERE  */}
+
 <Grid item xs={12} md={4}>
   <Card>
     <CardContent>
-      {/* Date Pickers in the same line */}
+ 
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <DatePicker
@@ -286,8 +266,6 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
   </Card>
 </Grid>
 
-
-   {/* Cruise Line Selector */}
    <Grid item xs={12} md={4}>
         <Box className="main_box_you">
           <Card>
@@ -303,9 +281,7 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
           </Card>
         </Box>
       </Grid>
-      
 
-   {/* Select Ship Selector */}
       <Grid item xs={12} md={4}>
         <Box className="main_box_you">
           <Card>
@@ -323,7 +299,6 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
         </Box>
       </Grid>
 
-  {/* Fourth Item (this will wrap to the next row) */}
   <Grid item xs={12} md={4}>
     <Box className="main_box_you">
       <Card>
@@ -333,7 +308,7 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
       </Card>
     </Box>
   </Grid>
-  {/* Select Destination Regions */}
+
       <Grid item xs={12} md={4}>
         <Box className="main_box_you">
           <Card>
@@ -346,7 +321,7 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
           </Card>
         </Box>
       </Grid>
-     {/* Select Departure Port */}
+
       <Grid item xs={12} md={4}>
         <Box className="main_box_you">
           <Card>
@@ -394,7 +369,7 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
       </Grid>
       <Grid item xs={12} md={6}>
   <Box className="main_box_you">
-      {/* Checkbox with the label "Show cruise with edit" */}
+
       <FormGroup>
         <FormControlLabel
           control={<Checkbox checked={showCruiseEdit} onChange={handleCheckboxChange} />}
@@ -402,7 +377,7 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
         />
       </FormGroup>
 
-      {/* Show the "Clear All" button when the checkbox is checked */}
+
       {showCruiseEdit && (
         <Box marginTop={2}>
           <Button variant="contained" color="secondary" onClick={handleClearAll}>
@@ -414,7 +389,7 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
     </Grid>
     <Grid item xs={12} md={6}>
         <Box className="main_box_you">
-          {/* Checkbox with the label "Show cruise packages" */}
+
           <FormGroup>
             <FormControlLabel
               control={<Checkbox checked={showCruisePackages} onChange={handleCheckboxShow} />}
@@ -422,7 +397,6 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
             />
           </FormGroup>
 
-          {/* Show the "Clear All" button when the checkbox is checked */}
           {showCruisePackages && (
             <Box marginTop={2}>
               <Button variant="contained" color="secondary" onClick={handleClearAllShow}>
@@ -434,7 +408,7 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
       </Grid>
       
 </Grid>
-  {/* Cruise Information */}
+
   <h2 style={{ margin: '20px 0' }}>Your Cruises</h2>
   {cruises.length > 0 ? (
         <TableContainer component={Paper} style={{ marginBottom: '40px', overflowX: 'auto' }}>
@@ -488,8 +462,6 @@ const YouCruises = ({ cruises, shipDetails,  onView }) => {
                         />
                       </Tooltip>
 
-
-                     {/* <Model show={showModal} onHide={() => setShowModal(false)} data={cruise}  /> */}
                      <div className="container mt-3">
                         <button onClick={() =>handleOpenPackageModal(cruise)} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_cruise">
                         <EditIcon />

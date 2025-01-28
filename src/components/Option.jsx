@@ -6,28 +6,27 @@ import Select from "react-select";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloudDoneIcon from '@mui/icons-material/CloudDone';
 const Option = () => {
-  // State to control visibility of additional content
+
   const [showContent, setShowContent] = useState(false);
 
-  // Toggle content visibility on button click
   const handleButtonClick = () => {
     setShowContent(!showContent);
   };
 
-  // Options for the Select dropdown
+ 
   const selectOptions = [
     { value: 'Increase price by amount', label: 'Increase price by amount' },
     { value: 'Decrease price by amount', label: 'Decrease price by amount' },
   ];
 
-  // Function to delete content (reset form visibility)
+
   const handleDelete = () => {
-    setShowContent(false); // Hide form
+    setShowContent(false); 
   };
 
-  // Function for done action (keep the form content visible)
+
   const handleDone = () => {
-    // You can handle any "done" action here, such as submitting the form
+
     console.log("Form Done!");
   };
 
@@ -51,18 +50,17 @@ const Option = () => {
         <AddIcon /> ADD
       </Button>
 
-      {/* Conditionally render content when showContent is true */}
       {showContent && (
         <Grid container spacing={2} className='added_content'>
           <Grid item={4}>
             <Box sx={{ width: 380, maxWidth: '100%' }}>
-              <TextField fullWidth label="Name" id="name" name="name" />
+              <TextField fullWidth label="Name" id="name" name="option_name" />
             </Box>
           </Grid>
 
           <Grid item={4}>
             <Box sx={{ width: 380, maxWidth: '100%' }}>
-              <TextField fullWidth label="Amount" id="amount" name="amount" />
+              <TextField fullWidth label="Amount" id="amount" name="option_amount" />
             </Box>
           </Grid>
 

@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
-import DatePicker from 'react-datepicker';
 import { format } from "date-fns";
 import 'react-datepicker/dist/react-datepicker.css';
-
-
-
 
 const Model = (cruiseData) => {
 
   const formRef = useRef(null);
   const closeButtonRef = useRef();
-
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,8 +16,6 @@ const Model = (cruiseData) => {
   const [cat, setCat] = useState([]);
   const [itinerary, setItinerary] = useState([]);
   const [pricesAdjustment, setPricesAdjustment] = useState([]);
-
-
 
   //  FORM STATE 
   const initialFormData = {
@@ -122,7 +115,7 @@ const Model = (cruiseData) => {
     fmData.append('type', cruiseData.data.type);
 
     try {
-      const response = await fetch('http://localhost:9001/api/cruise/create', { method: "POST", body: fmData });
+      const response = await fetch('http://52.87.39.93/api/cruise/create', { method: "POST", body: fmData });
 
       if (!response.ok) {
         throw new Error('Network response was not ok');

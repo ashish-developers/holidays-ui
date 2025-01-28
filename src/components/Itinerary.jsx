@@ -30,22 +30,12 @@ const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 8 + ITEM_PADDING_TOP,  
+      maxHeight: ITEM_HEIGHT * 8 + ITEM_PADDING_TOP,
       width: 250,
     },
   },
 };
 
-const names = [
-  'Accommodation',
-  'Cruise',
-  'Coach',
-  'Flight',
-  'Experience',
-  'Car Hire',
-  'Transfers',
-  'Miscellaneous',
-];
 
 function getStyles(name, personName, theme) {
   return {
@@ -74,11 +64,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Itinerary = () => {
+const Itinerary = ({ itinerary, value }) => {
+
+  //  FORM STATE 
+  const initialFormData = {
+    port: "",
+    date: "",
+    end_date: "",
+    dec: "",
+    name: "",
+  }
+  const [formData, setFormData] = useState(initialFormData);
   const [showTable, setShowTable] = useState(false);
   const [personName, setPersonName] = useState('');
-  const [tableData, setTableData] = useState([]); 
- const [editorValue, setEditorValue] = useState('');
+  const [tableData, setTableData] = useState([]);
+  const [editorValue, setEditorValue] = useState('');
   const theme = useTheme();
 
   const handleButtonClick = () => {
@@ -93,176 +93,60 @@ const Itinerary = () => {
   const handleAddItem = () => {
     if (personName) {
       setTableData([...tableData, personName]);
-      setPersonName(''); // Clear the selected value
+      setPersonName('');
     }
   };
 
   const handleDelete = (name) => {
     setTableData(tableData.filter(item => item !== name));
   };
-
-  // Different forms based on selected type
   const renderFormContent = () => {
     switch (personName) {
-      case 'Accommodation':
-        return (
-          <>
-        <Grid container spacing={2}>
-           <Grid item={6}>
-         <Box sx={{ width: 580, maxWidth: '100%' }}>
-          <Typography>Hotel Provider</Typography>
-         <Select2 className="select_option" options=''  onChange='' placeholder="Hotel" value=''/>
-         </Box>
-         </Grid>
-            <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
-            <TextField label="Search" fullWidth margin="normal" />
-            </Box>
-            </Grid>
-            <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
-              <LocalizationProvider dateAdapter={AdapterDayjs} >
-                  <DemoContainer components={['DatePicker']}>
-                    <DatePicker label="Check In Date" fullWidth />
-                  </DemoContainer>
-                </LocalizationProvider>
-            </Box>
-            </Grid>
-            <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs} >
-                  <DemoContainer components={['DatePicker']}>
-                    <DatePicker label="Check Out Date" fullWidth />
-                  </DemoContainer>
-                </LocalizationProvider>
-            </Box>
-            </Grid>
-            <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
-             <Typography >Text Banner</Typography>
-                  <ReactQuill
-                    value={editorValue}
-                    onChange={setEditorValue}
-                    style={{ height: '100%' }}
-                  />
-            </Box>
-            </Grid>
-            <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
-            <TextField label="Country" fullWidth margin="normal" />
-            </Box>
-            </Grid>
-           </Grid>
-          </>
-        );
+
       case 'Cruise':
         return (
           <>
-               <Grid container spacing={2}>
-          
-            <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
-            <TextField label="Port" fullWidth margin="normal" />
-            </Box>
-            </Grid>
-            <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
-              <LocalizationProvider dateAdapter={AdapterDayjs} >
+            <Grid container spacing={2}>
+
+              <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
+                <TextField label="Port" fullWidth margin="normal" name="port" />
+              </Box>
+              </Grid>
+              <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
+                <LocalizationProvider dateAdapter={AdapterDayjs} >
                   <DemoContainer components={['DatePicker']}>
-                    <DatePicker label="Check In Date" fullWidth />
+                    <DatePicker label="Check In Date" fullWidth name="date" />
                   </DemoContainer>
                 </LocalizationProvider>
-            </Box>
-            </Grid>
-            <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs} >
+              </Box>
+              </Grid>
+              <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
+                <LocalizationProvider dateAdapter={AdapterDayjs} >
                   <DemoContainer components={['DatePicker']}>
-                    <DatePicker label="Check Out Date" fullWidth />
+                    <DatePicker label="Check Out Date" fullWidth name="end_date" />
                   </DemoContainer>
                 </LocalizationProvider>
-            </Box>
-            </Grid>
-            <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
-             <Typography >Description</Typography>
-                  <ReactQuill
-                    value={editorValue}
-                    onChange={setEditorValue}
-                    style={{ height: '100%' }}
-                  />
-            </Box>
-            </Grid>
-           </Grid>
-          </>
-        );
-      case 'Coach':
-        return (
-          <>
-             <Grid container spacing={2}>
-          
-          <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
-          <TextField label="Heading" fullWidth margin="normal" />
-          </Box>
-          </Grid>
-          <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs} >
-                <DemoContainer components={['DatePicker']}>
-                  <DatePicker label="Check In Date" fullWidth />
-                </DemoContainer>
-              </LocalizationProvider>
-          </Box>
-          </Grid>
-          <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
-          <LocalizationProvider dateAdapter={AdapterDayjs} >
-                <DemoContainer components={['DatePicker']}>
-                  <DatePicker label="Check Out Date" fullWidth />
-                </DemoContainer>
-              </LocalizationProvider>
-          </Box>
-          </Grid>
-          <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
-           <Typography >Description</Typography>
+              </Box>
+              </Grid>
+              <Grid item={6}><Box sx={{ width: 580, maxWidth: '100%' }}>
+                <Typography >Description</Typography>
                 <ReactQuill
                   value={editorValue}
                   onChange={setEditorValue}
                   style={{ height: '100%' }}
+                  name="dec"
                 />
-          </Box>
-          </Grid>
-         </Grid>
+              </Box>
+              </Grid>
+            </Grid>
           </>
         );
-      case 'Flight':
-        return (
-          <>
-            <TextField label="Airline Name" fullWidth margin="normal" />
-            <TextField label="Flight Number" fullWidth margin="normal" />
-            <TextField label="Departure Date" fullWidth margin="normal" type="date" InputLabelProps={{ shrink: true }} />
-            <TextField label="Destination" fullWidth margin="normal" />
-          </>
-        );
-      case 'Experience':
-        return (
-          <>
-            <TextField label="Experience Name" fullWidth margin="normal" />
-            <TextField label="Location" fullWidth margin="normal" />
-            <TextField label="Date" fullWidth margin="normal" type="date" InputLabelProps={{ shrink: true }} />
-          </>
-        );
-      case 'Car Hire':
-        return (
-          <>
-            <TextField label="Car Model" fullWidth margin="normal" />
-            <TextField label="Pick-up Location" fullWidth margin="normal" />
-            <TextField label="Pick-up Date" fullWidth margin="normal" type="date" InputLabelProps={{ shrink: true }} />
-            <TextField label="Drop-off Date" fullWidth margin="normal" type="date" InputLabelProps={{ shrink: true }} />
-          </>
-        );
-      case 'Transfers':
-        return (
-          <>
-            <TextField label="Transfer Type" fullWidth margin="normal" />
-            <TextField label="Pick-up Location" fullWidth margin="normal" />
-            <TextField label="Transfer Date" fullWidth margin="normal" type="date" InputLabelProps={{ shrink: true }} />
-          </>
-        );
+
       case 'Miscellaneous':
         return (
           <>
-            <TextField label="Item Name" fullWidth margin="normal" />
-            <TextField label="Description" fullWidth margin="normal" />
+            <TextField label="Item Name" fullWidth margin="normal" name="name" />
+            <TextField label="Description" fullWidth margin="normal" name="dec" />
           </>
         );
       default:
@@ -322,13 +206,14 @@ const Itinerary = () => {
               input={<OutlinedInput label="Name" />}
               MenuProps={MenuProps}
             >
-              {names.map((name) => (
+              {itinerary.map((value) => (
+
                 <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
+                  key={value.value}
+                  value={value.value}
+                // style={getStyles(value, personName, theme)}
                 >
-                  {name}
+                  {value.label}
                 </MenuItem>
               ))}
             </Select>
