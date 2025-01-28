@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { format } from "date-fns";
 import 'react-datepicker/dist/react-datepicker.css';
+const apiHost = (window.location.hostname.indexOf('localhost') == -1) ? '16.170.107.234' : 'localhost';
 
 const Model = (cruiseData) => {
 
@@ -56,7 +57,7 @@ const Model = (cruiseData) => {
     // Function to fetch data
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:9001/api/master/data');
+        const response = await fetch(`http://${apiHost}:9001/api/master/data`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -115,7 +116,7 @@ const Model = (cruiseData) => {
     fmData.append('type', cruiseData.data.type);
 
     try {
-      const response = await fetch('http://52.87.39.93/api/cruise/create', { method: "POST", body: fmData });
+      const response = await fetch(`http://${apiHost}:9001/api/cruise/create`, { method: "POST", body: fmData });
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -123,9 +124,6 @@ const Model = (cruiseData) => {
       const result = await response.json();
       formRef.current.reset(); // Reset the form
       closeButtonRef.current.click();
-      // setItinerary(result.itinerary);
-      // setPricesAdjustment(result.pricesAdjustment);
-      // setCat(result.category);
     } catch (err) {
       console.log(err)
       setError(err.message);

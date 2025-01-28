@@ -12,6 +12,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import BackupIcon from '@mui/icons-material/Backup';
+
+const apiHost = (window.location.hostname.indexOf('localhost') == -1) ? '16.170.107.234' : 'localhost';
+
 const isWeekend = (date) => {
   return date.day() === 0 || date.day() === 6;
 };
@@ -53,59 +56,77 @@ const General = ({ categories, value, onChange }) => {
   const [formData, setFormData] = useState(initialFormData);
   // Sample options for the select fields
   const operatorOptions = [
-    { value: 'operator1', label: 'Operator 1' },
-    { value: 'operator2', label: 'Operator 2' },
-    { value: 'operator3', label: 'Operator 3' },
+    { value: '1', label: 'Azamara' }
   ];
 
   const shipOptions = [
-    { value: 'ship1', label: 'Ship 1' },
-    { value: 'ship2', label: 'Ship 2' },
-    { value: 'ship3', label: 'Ship 3' },
+    { value: '1', label: 'Azamara Quest' },
+    { value: '2', label: 'Azamara Journey' },
+    { value: '3', label: 'Azamara Pursuit' },
   ];
 
   const regionOptions = [
-    { value: 'region1', label: 'Region 1' },
-    { value: 'region2', label: 'Region 2' },
-    { value: 'region3', label: 'Region 3' },
+    { value: '1', label: 'Africa' },
+    { value: '2', label: 'Antarica' },
+    { value: '3', label: 'Worldwide' },
   ];
   const type = [
-    { value: 'ocean', label: 'ocean' },
-    { value: 'river', label: 'river' },
+    { value: '1', label: 'Ocean' },
+    { value: '2', label: 'River' },
 
   ];
 
   // Handle change for Select components
-  const handleOperatorChange = (selectedOptions) => {
-    setSelectedOperator(selectedOptions);
+  const handleOperatorChange = (selected) => {
+    onChange("operator", (selected[0] ? selected.map(item => item.value) : ''))
   };
 
-  const handleShipChange = (selectedOptions) => {
-    setSelectedShip(selectedOptions);
+  const handleShipChange = (selected) => {
+    console.log(selected)
+    onChange("ship", (selected[0] ? selected.map(item => item.value) : ''))
   };
 
-  const handleRegionChange = (selectedOptions) => {
-    setSelectedRegion(selectedOptions);
+  const handleRegionChange = (selected) => {
+    onChange("region", (selected[0] ? selected.map(item => item.value) : ''))
   };
-  const handleTypeChange = (selectedType) => {
-    setSelectedType(selectedType);
+  const handleTypeChange = (selected) => {
+    onChange("type", (selected[0] ? selected.map(item => item.value) : ''))
   };
-  const handleCatChange = (selectedCat) => {
-    console.log(selectedCat[0].value);
-    onChange("categories", selectedCat[0].value)
+
+  const handleStartOnChange = (selected) => {
+    onChange("starts_on", (selected[0] ? selected[0].value : ''))
+  }
+  const handleCatChange = (selected) => {
+    onChange("categories", (selected[0] ? selected.map(item => item.value) : ''))
   };
   const [editorValue, setEditorValue] = useState('');
 
-  const handleFileChange = (event) => {
+  const handleFileProfileChange = (event) => {
     const file = event.target.files[0];
-    onFileUpload(file)
+    onFileUpload(file, 'ship_profile_image')
   };
 
-  const onFileUpload = async (fileName) => {
-    const formData = new FormData();
-    formData.append("ship_profile_image", fileName);
+  const handleFileSalesChange = (event) => {
+    const file = event.target.files[0];
+    onFileUpload(file, 'sales_banner')
+  };
 
-    await fetch("http://52.87.39.93/api/file/upload", {
+  const handleFileCruiseChange = (event) => {
+    const file = event.target.files[0];
+    onFileUpload(file, 'ship_cover_image')
+  };
+
+  const handleFileMobileChange = (event) => {
+    const file = event.target.files[0];
+    onFileUpload(file, 'mobile_cruise_banner')
+  };
+  
+
+  const onFileUpload = async (fileName, name) => {
+    const formData = new FormData();
+    formData.append(name, fileName);
+
+    await fetch(`http://${apiHost}:9001/api/file/upload`, {
       method: "POST",
       body: formData,
     })
@@ -121,7 +142,6 @@ const General = ({ categories, value, onChange }) => {
 
   return (
     <>
-
       <Grid container spacing={2} className='form_tab'>
         <Grid item={6}>
           <Box sx={{ width: 580, maxWidth: '100%' }}>
@@ -141,7 +161,7 @@ const General = ({ categories, value, onChange }) => {
               isMulti
               onChange={handleOperatorChange}
               placeholder="Operator"
-              name={value.operator} value={value.operator}
+              name={value.operator}
             />
           </Box>
         </Grid>
@@ -153,7 +173,7 @@ const General = ({ categories, value, onChange }) => {
               isMulti
               onChange={handleShipChange}
               placeholder="Ship"
-              name={value.ship} value={value.ship}
+              name={value.ship}
             />
           </Box>
         </Grid>
@@ -165,12 +185,10 @@ const General = ({ categories, value, onChange }) => {
               isMulti
               onChange={handleRegionChange}
               placeholder="Region"
-              name={value.region} value={value.region}
+              name={value.region}
             />
           </Box>
         </Grid>
-
-
         <Grid item={6}>
           <Box sx={{ width: 580, maxWidth: '100%' }}>
             <Select
@@ -179,7 +197,7 @@ const General = ({ categories, value, onChange }) => {
               isMulti
               onChange={handleTypeChange}
               placeholder="Type"
-              name={value.type} value={value.type}
+              name={value.type}
             />
           </Box>
         </Grid>
@@ -187,7 +205,7 @@ const General = ({ categories, value, onChange }) => {
           <Box sx={{ width: 580, maxWidth: '100%' }}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DatePicker']}>
-                <DatePicker name={value.starts_on} value={value.starts_on} label="Start Date" />
+                <DatePicker onChange={(newVal) => onChange("starts_on", newVal.format('YYYY-MM-DD'))} name={value.starts_on} label="Start Date" />
               </DemoContainer>
             </LocalizationProvider>
           </Box>
@@ -196,7 +214,7 @@ const General = ({ categories, value, onChange }) => {
           <Box sx={{ width: 580, maxWidth: '100%' }}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DatePicker']}>
-                <DatePicker label="End Date" name={value.ends_on} value={value.ends_on} />
+                <DatePicker onChange={(newVal) => onChange("ends_on", newVal.format('YYYY-MM-DD'))} name={value.ends_on} label="End Date" />
               </DemoContainer>
             </LocalizationProvider>
           </Box>
@@ -207,11 +225,10 @@ const General = ({ categories, value, onChange }) => {
               className="select_option"
               options={categories}
               isMulti
-              placeholder={value.categories}
+              placeholder="Category"
               onChange={handleCatChange}
-              name={value.categories} value={value.categories}
+              name={value.categories}
             />
-
           </Box>
         </Grid>
 
@@ -221,13 +238,12 @@ const General = ({ categories, value, onChange }) => {
           </Box>
         </Grid>
 
-
         <Grid item={6}>
           <Box sx={{ width: 580, maxWidth: '100%' }}>
             <Typography variant='h6'>Cruise Image</Typography>
             <Button variant="contained" color="success" sx={{ width: '100%', height: '80px' }} component="label">
               <BackupIcon />Choose a file or drag it here
-              <input name={value.ship_profile_image} type="file" hidden onChange={handleFileChange} />
+              <input name={value.ship_profile_image} type="file" hidden onChange={handleFileProfileChange} />
             </Button>
           </Box>
         </Grid>
@@ -236,7 +252,7 @@ const General = ({ categories, value, onChange }) => {
             <Typography variant='h6'>Sales Banner</Typography>
             <Button variant="contained" color="success" sx={{ width: '100%', height: '80px' }} component="label">
               <BackupIcon />  Choose a file or drag it here
-              <input type="file" hidden name={value.sales_banner} value={value.sales_banner} /> </Button>
+              <input name={value.sales_banner} type="file" hidden onChange={handleFileSalesChange} /> </Button>
           </Box>
         </Grid>
         <Grid item={6}>
@@ -244,7 +260,7 @@ const General = ({ categories, value, onChange }) => {
             <Typography variant='h6'>Cruise Banner</Typography>
             <Button variant="contained" color="success" sx={{ width: '100%', height: '80px' }} component="label">
               <BackupIcon />  Choose a file or drag it here
-              <input name={value.ship_cover_image} value={value.ship_cover_image} type="file" hidden /> </Button>
+              <input name={value.ship_cover_image} type="file" hidden onChange={handleFileCruiseChange} /> </Button>
           </Box>
         </Grid>
         <Grid item={6}>
@@ -252,50 +268,45 @@ const General = ({ categories, value, onChange }) => {
             <Typography variant='h6'>Mobile Cruise Banner</Typography>
             <Button variant="contained" color="success" sx={{ width: '100%', height: '80px' }} component="label">
               <BackupIcon />  Choose a file or drag it here
-              <input name={value.mobile_cruise_banner} value={value.mobile_cruise_banner} type="file" hidden /> </Button>
+              <input name={value.mobile_cruise_banner} type="file" hidden onChange={handleFileMobileChange} /> </Button>
           </Box>
         </Grid>
         <Grid item={6}>
           <Box sx={{ width: 580, maxWidth: '100%' }}>
-            <TextField fullWidth label="Summary" id="fullWidth" name='summary' />
+            <TextField fullWidth label="Summary" id="fullWidth" onChange={(e) => onChange("summery", e.target.value)} value={value.summery} name={value.summery} />
           </Box>
         </Grid>
         <Grid item={6}>
           <Box sx={{ width: 580, maxWidth: '100%' }}>
-            <TextField fullWidth label="Sales Message" id="fullWidth" name='sale_message' />
+            <TextField fullWidth label="Sales Message" id="fullWidth" onChange={(e) => onChange("sale_message", e.target.value)} value={value.sale_message} name={value.sale_message} />
           </Box>
         </Grid>
         <Grid item={6}>
           <Box sx={{ width: 580, maxWidth: '100%', height: '100px' }}>
             <Typography >Text Banner</Typography>
-            <ReactQuill value={editorValue} onChange={setEditorValue} style={{ height: '100%' }} name='text' />
+            <ReactQuill value={value.text_banner} name={value.text_banner} onChange={(newValue) => onChange("text_banner", newValue)} style={{ height: '100%' }} />
 
           </Box>
         </Grid>
         <Grid item={6}>
           <Box sx={{ width: 580, maxWidth: '100%', height: '100px' }}>
             <Typography >Overview</Typography>
-            <ReactQuill value={editorValue} onChange={setEditorValue} style={{ height: '100%' }} name='text1' />
+            <ReactQuill value={value.overview} name={value.overview} onChange={(newValue) => onChange("overview", newValue)} style={{ height: '100%' }} />
           </Box>
         </Grid>
         <Grid item={6} className='text_edit'>
           <Box sx={{ width: 580, maxWidth: '100%', height: '100px' }}>
             <Typography >Whats Included</Typography>
-            <ReactQuill value={editorValue} onChange={setEditorValue} style={{ height: '100%' }} name='text2' />
+            <ReactQuill value={value.included} name={value.included} onChange={(newValue) => onChange("included", newValue)} style={{ height: '100%' }} />
           </Box>
         </Grid>
         <Grid item={6} className='text_edit'>
           <Box sx={{ width: 580, maxWidth: '100%', height: '100px' }}>
             <Typography >Extras</Typography>
-            <ReactQuill value={editorValue} onChange={setEditorValue} style={{ height: '100%' }} name='text3' />
+            <ReactQuill value={value.extras} name={value.extras} onChange={(newValue) => onChange("extras", newValue)} style={{ height: '100%' }} />
           </Box>
         </Grid>
-
       </Grid>
-
-
-
-
     </>
   )
 }

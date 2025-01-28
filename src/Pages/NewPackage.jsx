@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import Swal from 'sweetalert2';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Tabs, Tab, Typography, Box } from '@mui/material';
 import General from '../components/General';
 import Pricing from '../components/Pricing';
@@ -10,9 +11,12 @@ import SaveAsIcon from '@mui/icons-material/SaveAs';
 import CloseIcon from '@mui/icons-material/Close';
 import { Category } from '@mui/icons-material';
 
+
+
+const apiHost = (window.location.hostname.indexOf('localhost') == -1) ? '16.170.107.234' : 'localhost';
 const NewPackage = ({ open, handleClose }) => {
 
-  
+  const closeButtonRef = useRef();    
   const [cat, setCat] = useState([]);
   const [pricesAdjustment, setPricesAdjustment] = useState([]);
   const [itinerary, setItinerary] = useState([]);
@@ -24,10 +28,12 @@ const NewPackage = ({ open, handleClose }) => {
       mobile_cruise_banner: "",
       name: "",
       reference: "",
-      operator: "",
-      ship: "",
-      region:"",
-      type: "",
+      operator: [],
+      ship: [],
+      region:[],
+      type: [],
+      starts_on:null,
+      ends_on:null,
       vacation_days: "",
       summery: "",
       sales_message: "",
@@ -35,7 +41,9 @@ const NewPackage = ({ open, handleClose }) => {
       overview: "",
       included: "",
       extras: "",
-      categories: "",
+      categories: [],
+
+
       cruise_only_price: "",
       adjustment_end_date: "",
       adjustment_start_date: "",
@@ -57,7 +65,7 @@ const NewPackage = ({ open, handleClose }) => {
     // Function to fetch data
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:9001/api/master/data');
+        const response = await fetch(`http://${apiHost}:9001/api/master/data`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -93,11 +101,32 @@ const NewPackage = ({ open, handleClose }) => {
     setTabIndex(newIndex);
   };
 
+  const showAlert = () => {
+    Swal.fire('Success!', 'Cruise has been successfully submitted.', 'success');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload
     const fmData = new FormData(formRef.current);
-    //const data = Object.fromEntries(fmData.entries());
     console.log(fmData, formData); // Handle form data
+    console.log(formData)
+    try {
+      const response = await fetch(`http://${apiHost}:9001/api/cruise/mycreate`, { method: "POST", body : JSON.stringify(formData)} );
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const result = await response.json();
+      formRef.current.reset(); // Reset the form
+      
+      closeButtonRef.current.click();
+      showAlert();
+    } catch (err) {
+      console.log(err)
+      //setError(err.message);
+    } finally {
+      //setLoading(false);
+    }
   }
   const handleChange = (key, value) => {
     console.log(key, value)
@@ -112,7 +141,7 @@ const NewPackage = ({ open, handleClose }) => {
       {formData.name}
       <Dialog open={open} onClose={handleClose} className="sub_dialog" fullWidth>
       <DialogTitle>Package Cruise
-        <Button onClick={handleClose} color="primary" className='close_btn'><CloseIcon /></Button>
+        <Button onClick={handleClose} ref={closeButtonRef}  color="primary" className='close_btn'><CloseIcon /></Button>
       </DialogTitle>
       <hr />
         <DialogContent>
