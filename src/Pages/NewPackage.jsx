@@ -111,7 +111,9 @@ const NewPackage = ({ open, handleClose }) => {
     console.log(fmData, formData); // Handle form data
     console.log(formData)
     try {
-      const response = await fetch(`http://${apiHost}:9001/api/cruise/mycreate`, { method: "POST", body : JSON.stringify(formData)} );
+      const response = await fetch(`http://${apiHost}:9001/api/cruise/mycreate1`, { method: "POST", body : JSON.stringify(formData), headers: {
+        'content-type': 'application/json'
+      }} );
 
       if (!response.ok) {
         throw new Error('Network response was not ok');

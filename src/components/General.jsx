@@ -56,23 +56,23 @@ const General = ({ categories, value, onChange }) => {
   const [formData, setFormData] = useState(initialFormData);
   // Sample options for the select fields
   const operatorOptions = [
-    { value: '1', label: 'Azamara' }
+    { value: "679a0cee265865a71383a268", label: 'Azamara' }
   ];
 
   const shipOptions = [
-    { value: '1', label: 'Azamara Quest' },
-    { value: '2', label: 'Azamara Journey' },
-    { value: '3', label: 'Azamara Pursuit' },
+    { value: '679a0d80265865a71383a269', label: 'Azamara Quest' },
+    { value: '679a0d80265865a71383a26a', label: 'Azamara Journey' },
+    { value: '679a0d80265865a71383a26b', label: 'Azamara Pursuit' },
   ];
 
   const regionOptions = [
-    { value: '1', label: 'Africa' },
-    { value: '2', label: 'Antarica' },
-    { value: '3', label: 'Worldwide' },
+    { value: '679a0e67265865a71383a26c', label: 'Africa' },
+    { value: '679a0e67265865a71383a26d', label: 'Antarica' },
+    { value: '679a0e67265865a71383a26e', label: 'Worldwide' },
   ];
   const type = [
-    { value: '1', label: 'Ocean' },
-    { value: '2', label: 'River' },
+    { value: '679a0f1c265865a71383a26f', label: 'Ocean' },
+    { value: '679a0f1c265865a71383a270', label: 'River' },
 
   ];
 
